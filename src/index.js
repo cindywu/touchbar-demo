@@ -1,4 +1,6 @@
-const { app, BrowserWindow, TouchBar } = require('electron');
+const { 
+  app, BrowserWindow, TouchBar, nativeImage
+} = require('electron');
 const path = require('path');
 const { TouchBarButton } = TouchBar;
 
@@ -7,6 +9,8 @@ const { TouchBarButton } = TouchBar;
 // });
 
 let counter = 0;
+
+const image = nativeImage.createFromPath('./m.png').resize({ height: 30 });
 
 const update = () => {
   counter += 1;
@@ -23,11 +27,13 @@ const button = new TouchBarButton({
 });
 
 const button2 = new TouchBarButton({
-  label: `Canoes`,
-  accessibilityLabel: 'Counter',
-  backgroundColor: '#6ab04c',
+  icon: image,
+  iconPosition: 'left',
+  label: `Greetings, I am surfbot.`,
+  accessibilityLabel: 'Button looking like a label',
+  backgroundColor: '#000',
   click: () => {
-    update();
+    mainWindow.loadURL('https://www.surfline.com/')
   }
 });
 
@@ -124,6 +130,7 @@ const queens = new TouchBarButton({
 const touchBar = new TouchBar({
   items: [
     button,
+    button2,
     bowls,
     inbetweens1,
     rockpiles,
